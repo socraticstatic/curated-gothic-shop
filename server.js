@@ -14,6 +14,9 @@ if (fs.existsSync(subscribersFile)) {
   }
 }
 
+// Include nodemailer for sending emails. Install via `npm install nodemailer`.
+const nodemailer = require('nodemailer');
+
 const app = express();
 
 // Middleware to parse JSON bodies
@@ -79,12 +82,41 @@ app.post('/api/notify', (req, res) => {
   if (!subject || !content) {
     return res.status(400).json({ error: 'Subject and content are required.' });
   }
-  // Here we just log the notification and return success
-  console.log('Sending notification:', subject);
-  console.log('Content:', content);
-  console.log('Subscribers:', subscribers);
-  // TODO: integrate with an email service provider
-  res.json({ message: `Notification would be sent to ${subscribers.length} subscribers.` });
+  // Configure a nodemailer transporter. These values should be defined as environment
+  // variables in production (e.g. SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, FROM_EMAIL).
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'smtp.example.com',
+    port: process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: process.env.SMTP_USER || 'user@example.com',
+      pass: process.env.SMTP_PASS || 'password'
+    }
+  });
+
+  // Prepare an array of email sending promises
+  const sendPromises = subscribers.map(email => {
+    return transporter.sendMail({
+      from: process.env.FROM_EMAIL || 'Caryn’s Curations <no-reply@example.com>',
+      to: email,
+      subject,
+      text: content,
+      html: `<p>${content}</p>`
+    });
+  });
+
+  // Send emails in parallel and return a summary once done
+  Promise.allSettled(sendPromises)
+    .then(results => {
+      const fulfilled = results.filter(r => r.status === 'fulfilled').length;
+      const rejected = results.filter(r => r.status === 'rejected').length;
+      console.log(`Notification sent: ${fulfilled} succeeded, ${rejected} failed.`);
+      res.json({ message: `Notification sent: ${fulfilled} succeeded, ${rejected} failed.` });
+    })
+    .catch(error => {
+      console.error('Error sending notifications:', error);
+      res.status(500).json({ error: 'Failed to send notifications.' });
+    });
 });
 
 // Fallback to serve index.html for any unknown routes (for SPA behaviour)
