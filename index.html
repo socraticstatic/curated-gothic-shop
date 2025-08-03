@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Caryn’s curated gothic fashion portal" />
+  <title>Caryn’s Curated Gothic Shop</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">Caryn’s Curations</div>
+    <nav class="nav">
+      <a href="#clothing">Clothing</a>
+      <a href="#accessories">Accessories</a>
+      <a href="#home">Home & Lifestyle</a>
+      <a href="#blog">Blog</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Discover the Art of Gothic Style</h1>
+      <p>Hand‑selected gothic fashion, accessories and decor from around the world.</p>
+      <a href="#curations" class="cta-button">Explore Curations</a>
+    </section>
+    
+    <section id="curations" class="curations">
+      <h2>Featured Collections</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1520975927906-4d4f958393fa?auto=format&fit=crop&w=800&q=50');"></div>
+          <h3>Japanese Visual Kei</h3>
+          <p>Elegant and avant‑garde pieces from Japan’s visual kei and gothic scenes.</p>
+          <a href="#" class="card-link">View collection</a>
+        </div>
+        <div class="card">
+          <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1542068829-1115f7259450?auto=format&fit=crop&w=800&q=50');"></div>
+          <h3>European Classics</h3>
+          <p>Timeless garments and accessories from Germany, the UK and Scandinavia.</p>
+          <a href="#" class="card-link">View collection</a>
+        </div>
+        <div class="card">
+          <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1580466464183-31d33ed15116?auto=format&fit=crop&w=800&q=50');"></div>
+          <h3>Home & Lifestyle</h3>
+          <p>Dark romantic decor and unique finds to transform your space.</p>
+          <a href="#" class="card-link">View collection</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <h2>About This Project</h2>
+      <p>
+        Caryn’s curation site is a passion project celebrating gothic aesthetics. Each
+        item is carefully chosen to reflect quality, uniqueness and cultural
+        significance. Learn more about the brands we feature, our affiliate relationships
+        and how to support independent designers by reading our <a href="#blog">blog</a>.
+      </p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Caryn’s Curations. All rights reserved.</p>
+    <p class="disclosure">Disclosure: this site uses affiliate links that may earn us a commission.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
