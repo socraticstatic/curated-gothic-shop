@@ -1,0 +1,12 @@
+{
+  "name": "curated-gothic-shop",
+  "version": "1.0.0",
+  "description": "Curated gothic shop with Node.js backend for search and subscriptions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

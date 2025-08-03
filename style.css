@@ -292,6 +292,12 @@ body {
   color: #fff;
 }
 
+/* Message displayed after subscription attempts */
+.newsletter-message {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
 @media (max-width: 768px) {
   .nav a {
     margin-left: 0.75rem;

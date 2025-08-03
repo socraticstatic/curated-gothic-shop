@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "category": "clothing",
+    "name": "Velvet Lace Jacket",
+    "description": "An elegant velvet jacket with lace trim inspired by Victorian gothic fashion.",
+    "image": "https://images.unsplash.com/photo-1589395595558-3d9179c024c0?auto=format&fit=crop&w=600&q=80",
+    "url": "https://www.gothicplus.com/products/velvet-lace-jacket",
+    "search": "velvet lace jacket clothing victorian gothic"
+  },
+  {
+    "id": 2,
+    "category": "clothing",
+    "name": "Ruffled Maxi Dress",
+    "description": "Flowing dress with ruffled sleeves and corset‑inspired bodice.",
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80",
+    "url": "https://www.prettyattitude.com/products/ruffled-maxi-dress",
+    "search": "ruffled maxi dress clothing corset bodice"
+  },
+  {
+    "id": 3,
+    "category": "clothing",
+    "name": "Steampunk Waistcoat",
+    "description": "Tailored waistcoat with brass buttons and brocade pattern.",
+    "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80",
+    "url": "https://www.darkattitude.com/products/steampunk-waistcoat",
+    "search": "steampunk waistcoat brass buttons brocade"
+  },
+  {
+    "id": 4,
+    "category": "accessories",
+    "name": "Silver Crescent Necklace",
+    "description": "Delicate sterling necklace featuring a crescent moon and gemstone pendant.",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+    "url": "https://www.prettyattitude.com/products/silver-crescent-necklace",
+    "search": "silver crescent necklace moon gemstone"
+  },
+  {
+    "id": 5,
+    "category": "accessories",
+    "name": "Victorian Lace Gloves",
+    "description": "Soft lace gloves reminiscent of Victorian gothic elegance.",
+    "image": "https://images.unsplash.com/photo-1542060744-64c3d368c5d2?auto=format&fit=crop&w=600&q=80",
+    "url": "https://www.gothicplus.com/products/victorian-lace-gloves",
+    "search": "victorian lace gloves accessories gothic"
+  },
+  {
+    "id": 6,
+    "category": "accessories",
+    "name": "Leather Choker with O‑Ring",
+    "description": "Simple yet edgy choker crafted from black leather with a metal O‑ring.",
+    "image": "https://images.unsplash.com/photo-1510172952291-c4392ee465db?auto=format&fit=crop&w=600&q=80",
+    "url": "https://www.darkattitude.com/products/leather-choker-o-ring",
+    "search": "leather choker o‑ring accessories punk"
+  },
+  {
+    "id": 7,
+    "category": "home",
+    "name": "Candle Holder Set",
+    "description": "Black wrought iron candle holders to cast a warm gothic glow.",
+    "image": "https://images.unsplash.com/photo-1557682250-33bd709cbe85?auto=format&fit=crop&w=600&q=80",
+    "url": "https://www.blackangel.de/products/candle-holder-set",
+    "search": "candle holder set home decor wrought iron"
+  },
+  {
+    "id": 8,
+    "category": "home",
+    "name": "Skull Planter",
+    "description": "A ceramic skull planter perfect for succulents or herbs.",
+    "image": "https://images.unsplash.com/photo-1500336624523-d727130c3328?auto=format&fit=crop&w=600&q=80",
+    "url": "https://www.hellaholics.com/products/skull-planter",
+    "search": "skull planter home decor ceramic"
+  },
+  {
+    "id": 9,
+    "category": "home",
+    "name": "Baroque Mirror",
+    "description": "Ornate baroque‑style mirror to adorn your gothic boudoir.",
+    "image": "https://images.unsplash.com/photo-1484047134374-9a2a7fbf3d90?auto=format&fit=crop&w=600&q=80",
+    "url": "https://www.blackangel.de/products/baroque-mirror",
+    "search": "baroque mirror home decor ornate"
+  }
+]

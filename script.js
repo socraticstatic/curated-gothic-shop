@@ -9,7 +9,13 @@
  * a sense of the visual layout and allow the page to feel alive.
  */
 
-const items = [
+/*
+ * In earlier versions we embedded curated items directly in this script. For a more
+ * flexible experience, items are now loaded from the back‑end via AJAX. We
+ * retain a fallback list here so that the UI still renders if the API is
+ * unavailable (e.g. when running as a purely static site).
+ */
+const fallbackItems = [
   {
     category: 'clothing',
     name: 'Velvet Lace Jacket',
@@ -75,38 +81,114 @@ const items = [
   }
 ];
 
-function renderItems() {
+/**
+ * Render a list of items into the appropriate category containers. Clears any
+ * previously rendered cards before inserting the new ones. Accepts an
+ * array of item objects with the shape defined in items.json.
+ */
+function renderItems(items) {
+  // Clear existing cards
+  document.querySelectorAll('.item-container').forEach(container => {
+    container.innerHTML = '';
+  });
   items.forEach(item => {
     const container = document.getElementById(`${item.category}-items`);
     if (!container) return;
     const card = document.createElement('div');
     card.className = 'item-card';
-    // Store searchable text on the card for quick filtering
     card.dataset.search = `${item.name.toLowerCase()} ${item.description.toLowerCase()}`;
     card.innerHTML = `
       <div class="item-image" style="background-image: url('${item.image}');"></div>
       <h4>${item.name}</h4>
       <p>${item.description}</p>
-      <a href="${item.link}" target="_blank" class="item-link">View Item</a>
+      <a href="${item.url || item.link}" target="_blank" class="item-link">View Item</a>
     `;
     container.appendChild(card);
   });
+}
 
-  // Attach search functionality
-  const searchInput = document.getElementById('search-input');
-  if (searchInput) {
-    searchInput.addEventListener('input', event => {
-      const query = event.target.value.trim().toLowerCase();
-      document.querySelectorAll('.item-card').forEach(card => {
-        const text = card.dataset.search || '';
-        if (text.includes(query)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+/**
+ * Fetch all items from the back‑end. Falls back to the hard‑coded list if the
+ * API is unavailable or returns an error. Returns a promise resolving to an
+ * array of item objects.
+ */
+async function fetchItems() {
+  try {
+    const response = await fetch('/api/items');
+    if (!response.ok) throw new Error('Network response was not ok');
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.warn('Using fallback items due to error fetching from API:', err);
+    return fallbackItems;
+  }
+}
+
+/**
+ * Perform a search via the back‑end API. Returns matching items. Falls back to
+ * client‑side filtering of the fallback list if the API call fails.
+ */
+async function searchItems(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) {
+    return fetchItems();
+  }
+  try {
+    const response = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+    if (!response.ok) throw new Error('Network response was not ok');
+    return await response.json();
+  } catch (err) {
+    console.warn('Search API unavailable, falling back to client filtering:', err);
+    return fallbackItems.filter(item => {
+      const text = `${item.name} ${item.description}`.toLowerCase();
+      return text.includes(q);
     });
   }
 }
 
-document.addEventListener('DOMContentLoaded', renderItems);
+/**
+ * Set up event listeners for search and subscription. Invoked once DOM is ready.
+ */
+async function initialize() {
+  // Load initial items and render
+  const allItems = await fetchItems();
+  renderItems(allItems);
+
+  // Search functionality
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', async event => {
+      const query = event.target.value;
+      const results = await searchItems(query);
+      renderItems(results);
+    });
+  }
+
+  // Newsletter subscription
+  const form = document.getElementById('newsletter-form');
+  const emailInput = document.getElementById('newsletter-email');
+  const messageEl = document.getElementById('newsletter-message');
+  if (form && emailInput && messageEl) {
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      const email = emailInput.value.trim();
+      if (!email) return;
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await response.json();
+        messageEl.textContent = data.message || data.error || 'Unexpected response.';
+        messageEl.style.color = response.ok ? '#8de08c' : '#e08c8c';
+        if (response.ok) emailInput.value = '';
+      } catch (err) {
+        messageEl.textContent = 'Error subscribing. Please try again later.';
+        messageEl.style.color = '#e08c8c';
+      }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initialize);
