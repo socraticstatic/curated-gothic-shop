@@ -18,7 +18,7 @@
       <a href="#clothing">Clothing</a>
       <a href="#accessories">Accessories</a>
       <a href="#home">Home & Lifestyle</a>
-      <a href="#blog">Blog</a>
+      <a href="blog/index.html">Blog</a>
       <a href="#about">About</a>
     </nav>
   </header>
@@ -29,9 +29,23 @@
       <a href="#collections" class="cta-button">Explore Curations</a>
     </section>
 
+    <!-- Newsletter signup -->
+    <section class="newsletter">
+      <h2>Join Our Newsletter</h2>
+      <p>Stay updated on new curations, blog posts and special offers. We respect your privacy.</p>
+      <form action="#" method="post" class="newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="Enter your email" aria-label="Email" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </section>
+
     <!-- Detailed collections generated dynamically -->
     <section id="collections" class="collections">
       <h2 class="collections-title">Curated Categories</h2>
+      <!-- Search bar to filter curated items -->
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search curated items..." aria-label="Search curated items" />
+      </div>
       <div id="clothing" class="category-section">
         <h3>Clothing</h3>
         <div class="item-container" id="clothing-items"></div>
