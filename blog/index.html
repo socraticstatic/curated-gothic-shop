@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Blog – Caryn’s Curated Gothic Shop" />
+  <title>Blog – Caryn’s Curated Gothic Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .blog-container { max-width: 800px; margin: 0 auto; padding: 4rem 1.5rem; }
+    .blog-post { margin-bottom: 3rem; }
+    .blog-post h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .blog-post p { color: #b5acb9; margin-bottom: 0.5rem; }
+    .blog-post a { color: #c5bccc; text-decoration: underline; }
+    .blog-post a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo"><a href="../index.html" style="color: inherit; text-decoration: none;">Caryn’s Curations</a></div>
+    <nav class="nav">
+      <a href="../index.html#clothing">Clothing</a>
+      <a href="../index.html#accessories">Accessories</a>
+      <a href="../index.html#home">Home & Lifestyle</a>
+      <a href="index.html">Blog</a>
+      <a href="../index.html#about">About</a>
+    </nav>
+  </header>
+  <main class="blog-container">
+    <h1>Blog</h1>
+    <p>Stories, insights and guidance from the world of gothic fashion and culture.</p>
+    <div class="blog-post">
+      <h2><a href="visual-kei.html">Exploring Visual Kei: Japan’s Avant‑Garde Gothic Scene</a></h2>
+      <p>A deep dive into the Japanese visual kei movement – its origins, influences and why it continues to inspire gothic fashion today.</p>
+    </div>
+    <!-- Additional posts can be added here -->
+  </main>
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Caryn’s Curations. All rights reserved.</p>
+    <p class="disclosure">Disclosure: this site uses affiliate links that may earn us a commission.</p>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
