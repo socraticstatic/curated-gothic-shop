@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Admin interface for managing affiliate codes and banners." />
+  <title>Admin – Manage Affiliates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .admin-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .admin-container h1 { margin-bottom: 1rem; }
+    .affiliate-form { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+    .affiliate-form input, .affiliate-form textarea { flex: 1 1 45%; padding: 0.5rem; background: #2c2933; border: 1px solid #444; color: #f0eaf0; }
+    .affiliate-form button { padding: 0.5rem 1rem; background: #6f5a89; color: #fff; border: none; cursor: pointer; }
+    .affiliate-table { width: 100%; border-collapse: collapse; }
+    .affiliate-table th, .affiliate-table td { border: 1px solid #444; padding: 0.5rem; }
+    .affiliate-table th { background: #382c4d; }
+    .affiliate-table td { background: #2c2933; }
+    .actions button { margin-right: 0.5rem; padding: 0.3rem 0.6rem; }
+  </style>
+</head>
+<body>
+  <main class="admin-container">
+    <h1>Affiliate Management</h1>
+    <form id="affiliate-form" class="affiliate-form">
+      <!-- Hidden field for editing existing affiliates -->
+      <input type="hidden" id="affiliate-id" />
+      <input type="text" id="affiliate-name" placeholder="Name" required />
+      <input type="url" id="affiliate-link" placeholder="Affiliate link" required />
+      <input type="url" id="affiliate-banner" placeholder="Banner image URL" />
+      <textarea id="affiliate-description" placeholder="Description (optional)"></textarea>
+      <input type="text" id="affiliate-categories" placeholder="Categories (comma-separated)" />
+      <input type="text" id="admin-token" placeholder="Admin token (optional)" />
+      <button type="submit">Save Affiliate</button>
+      <button type="button" id="reset-form">Reset</button>
+    </form>
+    <table class="affiliate-table">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Link</th><th>Banner</th><th>Description</th><th>Categories</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="affiliate-list"></tbody>
+    </table>
+  </main>
+  <script>
+    async function loadAffiliates() {
+      const res = await fetch('/api/affiliates');
+      const data = await res.json();
+      const list = document.getElementById('affiliate-list');
+      list.innerHTML = '';
+      data.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.id}</td>
+          <td>${item.name}</td>
+          <td><a href="${item.link}" target="_blank">link</a></td>
+          <td>${item.banner ? `<img src="${item.banner}" alt="banner" style="max-width:100px;">` : ''}</td>
+          <td>${item.description || ''}</td>
+          <td>${Array.isArray(item.categories) ? item.categories.join(', ') : ''}</td>
+          <td class="actions">
+            <button onclick="editAffiliate(${item.id})">Edit</button>
+            <button onclick="deleteAffiliate(${item.id})">Delete</button>
+          </td>
+        `;
+        list.appendChild(tr);
+      });
+    }
+
+    async function saveAffiliate(e) {
+      e.preventDefault();
+      const id = document.getElementById('affiliate-id').value;
+      const name = document.getElementById('affiliate-name').value.trim();
+      const link = document.getElementById('affiliate-link').value.trim();
+      const banner = document.getElementById('affiliate-banner').value.trim();
+      const description = document.getElementById('affiliate-description').value.trim();
+      const categoriesStr = document.getElementById('affiliate-categories').value.trim();
+      const categories = categoriesStr ? categoriesStr.split(',').map(c => c.trim()) : [];
+      const token = document.getElementById('admin-token').value.trim();
+      const body = { id: id || undefined, name, link, banner, description, categories };
+      const res = await fetch('/api/affiliates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...(token ? { 'X-Admin-Token': token } : {}) },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      alert(data.message || data.error);
+      if (res.ok) {
+        document.getElementById('affiliate-form').reset();
+        document.getElementById('affiliate-id').value = '';
+        loadAffiliates();
+      }
+    }
+
+    function editAffiliate(id) {
+      const row = Array.from(document.getElementById('affiliate-list').children).find(tr => parseInt(tr.children[0].textContent) === id);
+      if (!row) return;
+      document.getElementById('affiliate-id').value = row.children[0].textContent;
+      document.getElementById('affiliate-name').value = row.children[1].textContent;
+      document.getElementById('affiliate-link').value = row.children[2].querySelector('a').href;
+      const img = row.children[3].querySelector('img');
+      document.getElementById('affiliate-banner').value = img ? img.src : '';
+      document.getElementById('affiliate-description').value = row.children[4].textContent;
+      document.getElementById('affiliate-categories').value = row.children[5].textContent;
+    }
+
+    async function deleteAffiliate(id) {
+      const token = document.getElementById('admin-token').value.trim();
+      if (!confirm('Are you sure you want to delete this affiliate?')) return;
+      const res = await fetch(`/api/affiliates/${id}`, {
+        method: 'DELETE',
+        headers: token ? { 'X-Admin-Token': token } : {}
+      });
+      const data = await res.json();
+      alert(data.message || data.error);
+      if (res.ok) {
+        loadAffiliates();
+      }
+    }
+
+    document.getElementById('affiliate-form').addEventListener('submit', saveAffiliate);
+    document.getElementById('reset-form').addEventListener('click', () => {
+      document.getElementById('affiliate-form').reset();
+      document.getElementById('affiliate-id').value = '';
+    });
+
+    // Initial load
+    loadAffiliates();
+  </script>
+</body>
+</html>

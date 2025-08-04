@@ -14,6 +14,20 @@ if (fs.existsSync(subscribersFile)) {
   }
 }
 
+// Load affiliates. Create file if it doesn't exist
+let affiliates = [];
+const affiliatesFile = path.join(__dirname, 'affiliates.json');
+if (fs.existsSync(affiliatesFile)) {
+  try {
+    affiliates = JSON.parse(fs.readFileSync(affiliatesFile));
+  } catch (err) {
+    affiliates = [];
+  }
+} else {
+  // initialize file with an empty array
+  fs.writeFileSync(affiliatesFile, JSON.stringify(affiliates, null, 2));
+}
+
 // Include nodemailer for sending emails. Install via `npm install nodemailer`.
 const nodemailer = require('nodemailer');
 
@@ -26,11 +40,85 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 /**
+ * Middleware to protect admin routes. Use a simple token passed via
+ * X-Admin-Token header. The expected token should be set in the
+ * ADMIN_TOKEN environment variable. This provides a minimal level of
+ * security for managing affiliates. In production, replace this with a
+ * proper authentication system.
+ */
+function requireAdmin(req, res, next) {
+  const provided = req.header('X-Admin-Token');
+  const expected = process.env.ADMIN_TOKEN;
+  if (!expected) {
+    // If no token is configured, allow all actions (for demo purposes)
+    return next();
+  }
+  if (!provided || provided !== expected) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
+
+/**
  * GET /api/items
  * Return all curated items as JSON.
  */
 app.get('/api/items', (req, res) => {
   res.json(items);
+});
+
+/**
+ * GET /api/affiliates
+ * Return the list of affiliate programs (id, name, link, banner, description, categories).
+ */
+app.get('/api/affiliates', (req, res) => {
+  res.json(affiliates);
+});
+
+/**
+ * POST /api/affiliates
+ * Add a new affiliate program or update an existing one. Requires admin token.
+ * Body: { id?, name, link, banner, description, categories }
+ */
+app.post('/api/affiliates', requireAdmin, (req, res) => {
+  const { id, name, link, banner, description, categories } = req.body;
+  if (!name || !link) {
+    return res.status(400).json({ error: 'Name and link are required.' });
+  }
+  // If id provided, update existing
+  if (id) {
+    const idx = affiliates.findIndex(a => a.id === Number(id));
+    if (idx < 0) {
+      return res.status(404).json({ error: 'Affiliate not found.' });
+    }
+    affiliates[idx] = { id: Number(id), name, link, banner, description, categories };
+  } else {
+    // Create new id
+    const newId = affiliates.length > 0 ? Math.max(...affiliates.map(a => a.id)) + 1 : 1;
+    affiliates.push({ id: newId, name, link, banner, description, categories });
+  }
+  // Persist to file
+  fs.writeFile(affiliatesFile, JSON.stringify(affiliates, null, 2), err => {
+    if (err) console.error('Failed to save affiliates:', err);
+  });
+  res.json({ message: 'Affiliate saved successfully.' });
+});
+
+/**
+ * DELETE /api/affiliates/:id
+ * Remove an affiliate program. Requires admin token.
+ */
+app.delete('/api/affiliates/:id', requireAdmin, (req, res) => {
+  const id = Number(req.params.id);
+  const idx = affiliates.findIndex(a => a.id === id);
+  if (idx < 0) {
+    return res.status(404).json({ error: 'Affiliate not found.' });
+  }
+  affiliates.splice(idx, 1);
+  fs.writeFile(affiliatesFile, JSON.stringify(affiliates, null, 2), err => {
+    if (err) console.error('Failed to save affiliates:', err);
+  });
+  res.json({ message: 'Affiliate removed.' });
 });
 
 /**

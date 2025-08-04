@@ -313,3 +313,45 @@ body {
     width: 100%;
   }
 }
+
+/* Affiliate banners section */
+.affiliates {
+  padding: 3rem 1.5rem;
+  background: #1d1925;
+  text-align: center;
+}
+
+.affiliates-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.affiliate-banners {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.affiliate-banner {
+  max-width: 300px;
+  background: #2c2933;
+  padding: 0.5rem;
+  border: 1px solid #3a3147;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.affiliate-banner img {
+  max-width: 100%;
+  height: auto;
+}
+
+.affiliate-banner span {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #b5acb9;
+}

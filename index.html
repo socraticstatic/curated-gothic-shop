@@ -3,70 +3,126 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="description" content="Blog – Caryn’s Curated Gothic Shop" />
-      <meta name="keywords" content="gothic fashion blog, visual kei, dark culture, curated gothic shop, alternative clothing" />
-      <!-- Open Graph / Facebook -->
-      <meta property="og:title" content="Blog – Caryn’s Curated Gothic Shop" />
-      <meta property="og:description" content="Stories, insights and guidance from the world of gothic fashion and culture." />
-      <meta property="og:type" content="website" />
-      <!-- Replace with your production URL -->
-      <meta property="og:url" content="https://example.com/blog/index.html" />
-      <!-- Provide a representative image (update path accordingly) -->
-      <meta property="og:image" content="/images/blog-share.jpg" />
-      <!-- Twitter Card -->
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Blog – Caryn’s Curated Gothic Shop" />
-      <meta name="twitter:description" content="Stories, insights and guidance from the world of gothic fashion and culture." />
-      <meta name="twitter:image" content="/images/blog-share.jpg" />
-  <meta name="keywords" content="gothic fashion blog, alternative fashion, visual kei, curated gothic shop" />
-  <meta property="og:title" content="Blog – Caryn’s Curated Gothic Shop" />
-  <meta property="og:description" content="Stories, insights and guidance from the world of gothic fashion and culture." />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://example.com/blog" />
+  <meta name="description" content="Caryn’s curated gothic fashion portal" />
+  <meta name="keywords" content="gothic fashion, gothic home decor, curated gothic shop, alternative clothing, visual kei, dark fashion" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Caryn’s Curated Gothic Shop" />
+  <meta property="og:description" content="Discover curated gothic fashion, accessories and decor from around the world." />
+  <meta property="og:type" content="website" />
+  <!-- Set the og:url to your deployed site URL once configured -->
+  <meta property="og:url" content="https://example.com" />
+  <!-- Provide a representative image for social sharing -->
   <meta property="og:image" content="/images/share-image.jpg" />
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Blog – Caryn’s Curated Gothic Shop" />
-  <meta name="twitter:description" content="Stories, insights and guidance from the world of gothic fashion and culture." />
+  <meta name="twitter:title" content="Caryn’s Curated Gothic Shop" />
+  <meta name="twitter:description" content="Discover curated gothic fashion, accessories and decor from around the world." />
   <meta name="twitter:image" content="/images/share-image.jpg" />
-  <title>Blog – Caryn’s Curated Gothic Shop</title>
+  <title>Caryn’s Curated Gothic Shop</title>
+  <!-- Preconnect and load Google fonts for gothic elegance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css" />
-  <style>
-    .blog-container { max-width: 800px; margin: 0 auto; padding: 4rem 1.5rem; }
-    .blog-post { margin-bottom: 3rem; }
-    .blog-post h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
-    .blog-post p { color: #b5acb9; margin-bottom: 0.5rem; }
-    .blog-post a { color: #c5bccc; text-decoration: underline; }
-    .blog-post a:hover { color: #fff; }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="logo"><a href="../index.html" style="color: inherit; text-decoration: none;">Caryn’s Curations</a></div>
+    <div class="logo">Caryn’s Curations</div>
     <nav class="nav">
-      <a href="../index.html#clothing">Clothing</a>
-      <a href="../index.html#accessories">Accessories</a>
-      <a href="../index.html#home">Home & Lifestyle</a>
-      <a href="index.html">Blog</a>
-      <a href="../index.html#about">About</a>
+      <a href="#clothing">Clothing</a>
+      <a href="#accessories">Accessories</a>
+      <a href="#home">Home & Lifestyle</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="#about">About</a>
     </nav>
   </header>
-  <main class="blog-container">
-    <h1>Blog</h1>
-    <p>Stories, insights and guidance from the world of gothic fashion and culture.</p>
-    <div class="blog-post">
-      <h2><a href="visual-kei.html">Exploring Visual Kei: Japan’s Avant‑Garde Gothic Scene</a></h2>
-      <p>A deep dive into the Japanese visual kei movement – its origins, influences and why it continues to inspire gothic fashion today.</p>
-    </div>
-    <!-- Additional posts can be added here -->
+  <main>
+    <section class="hero">
+      <h1>Discover the Art of Gothic Style</h1>
+      <p>Hand‑selected gothic fashion, accessories and decor from around the world.</p>
+      <a href="#collections" class="cta-button">Explore Curations</a>
+    </section>
+
+    <!-- Newsletter signup -->
+    <section class="newsletter">
+      <h2>Join Our Newsletter</h2>
+      <p>Stay updated on new curations, blog posts and special offers. We respect your privacy.</p>
+      <form action="#" id="newsletter-form" class="newsletter-form" onsubmit="return false;">
+        <input type="email" id="newsletter-email" placeholder="Enter your email" aria-label="Email" required />
+        <button type="submit">Subscribe</button>
+        <span class="newsletter-message" id="newsletter-message"></span>
+      </form>
+    </section>
+
+    <!-- Affiliate banners section -->
+    <section id="affiliates" class="affiliates">
+      <h2 class="affiliates-title">Featured Partners</h2>
+      <div id="affiliate-banners" class="affiliate-banners"></div>
+    </section>
+
+    <!-- Detailed collections generated dynamically -->
+    <section id="collections" class="collections">
+      <h2 class="collections-title">Curated Categories</h2>
+      <!-- Search bar to filter curated items -->
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search curated items..." aria-label="Search curated items" />
+      </div>
+      <div id="clothing" class="category-section">
+        <h3>Clothing</h3>
+        <div class="item-container" id="clothing-items"></div>
+      </div>
+      <div id="accessories" class="category-section">
+        <h3>Accessories</h3>
+        <div class="item-container" id="accessories-items"></div>
+      </div>
+      <div id="home" class="category-section">
+        <h3>Home & Lifestyle</h3>
+        <div class="item-container" id="home-items"></div>
+      </div>
+    </section>
+    
+    <section id="curations" class="curations">
+      <h2>Featured Collections</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1520975927906-4d4f958393fa?auto=format&fit=crop&w=800&q=50');"></div>
+          <h3>Japanese Visual Kei</h3>
+          <p>Elegant and avant‑garde pieces from Japan’s visual kei and gothic scenes.</p>
+          <a href="#clothing" class="card-link">View collection</a>
+        </div>
+        <div class="card">
+          <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1542068829-1115f7259450?auto=format&fit=crop&w=800&q=50');"></div>
+          <h3>European Classics</h3>
+          <p>Timeless garments and accessories from Germany, the UK and Scandinavia.</p>
+          <a href="#accessories" class="card-link">View collection</a>
+        </div>
+        <div class="card">
+          <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1580466464183-31d33ed15116?auto=format&fit=crop&w=800&q=50');"></div>
+          <h3>Home & Lifestyle</h3>
+          <p>Dark romantic decor and unique finds to transform your space.</p>
+          <a href="#home" class="card-link">View collection</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <h2>About This Project</h2>
+      <p>
+        Caryn’s curation site is a passion project celebrating gothic aesthetics. Each
+        item is carefully chosen to reflect quality, uniqueness and cultural
+        significance. Learn more about the brands we feature, our affiliate relationships
+        and how to support independent designers by reading our <a href="#blog">blog</a>.
+      </p>
+    </section>
   </main>
   <footer class="site-footer">
     <p>&copy; <span id="year"></span> Caryn’s Curations. All rights reserved.</p>
     <p class="disclosure">Disclosure: this site uses affiliate links that may earn us a commission.</p>
   </footer>
+
+  <script src="script.js"></script>
   <script>
+    // Set current year in the footer
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>

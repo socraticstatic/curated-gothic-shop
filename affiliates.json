@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Gothic Plus",
+    "link": "https://gothicplus.com?ref=YOURCODE",
+    "banner": "https://example.com/banners/gothicplus-banner.jpg",
+    "description": "Shop curated gothic clothing and accessories with our exclusive Gothic Plus affiliate link.",
+    "categories": ["clothing", "accessories"]
+  },
+  {
+    "id": 2,
+    "name": "Pretty Attitude",
+    "link": "https://prettyattitude.com?ref=YOURCODE",
+    "banner": "https://example.com/banners/prettyattitude-banner.jpg",
+    "description": "Get 10% off alternative fashion by using our Pretty Attitude affiliate link.",
+    "categories": ["clothing"]
+  }
+]

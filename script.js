@@ -189,6 +189,37 @@ async function initialize() {
       }
     });
   }
+
+  // Load affiliate banners
+  loadAffiliateBanners();
+}
+
+/**
+ * Fetch and render affiliate banners into the #affiliate-banners container.
+ * Banners are displayed as clickable images linking to the affiliate URL.
+ */
+async function loadAffiliateBanners() {
+  const container = document.getElementById('affiliate-banners');
+  if (!container) return;
+  try {
+    const response = await fetch('/api/affiliates');
+    const affiliates = await response.json();
+    container.innerHTML = '';
+    affiliates.forEach(aff => {
+      if (!aff.banner || !aff.link) return;
+      const div = document.createElement('div');
+      div.className = 'affiliate-banner';
+      div.innerHTML = `
+        <a href="${aff.link}" target="_blank" rel="noopener noreferrer">
+          <img src="${aff.banner}" alt="${aff.name} banner">
+        </a>
+        <span>${aff.name}</span>
+      `;
+      container.appendChild(div);
+    });
+  } catch (err) {
+    console.error('Failed to load affiliates:', err);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initialize);
