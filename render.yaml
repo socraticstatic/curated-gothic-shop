@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: gothic-shop
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    branch: main
+    autoDeploy: true
+    envVars:
+      - key: ADMIN_TOKEN
+        value: "set_this_in_render_dashboard"
+      - key: SMTP_HOST
+        value: "smtp.example.com"
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        value: "your_smtp_user"
+      - key: SMTP_PASS
+        value: "your_smtp_password"
