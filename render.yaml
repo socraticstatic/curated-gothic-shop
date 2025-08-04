@@ -1,20 +1,22 @@
 services:
   - type: web
     name: gothic-shop
-    env: node
+    runtime: node # use the Node.js native runtime
     plan: free
+    branch: main
     buildCommand: npm install
     startCommand: node server.js
-    branch: main
     autoDeploy: true
     envVars:
+      # The admin token used by the admin interface. Set this secret in the Render dashboard.
       - key: ADMIN_TOKEN
-        value: "set_this_in_render_dashboard"
+        sync: false
+      # SMTP configuration for newsletter notifications. Populate these in the dashboard.
       - key: SMTP_HOST
-        value: "smtp.example.com"
+        sync: false
       - key: SMTP_PORT
-        value: "587"
+        sync: false
       - key: SMTP_USER
-        value: "your_smtp_user"
+        sync: false
       - key: SMTP_PASS
-        value: "your_smtp_password"
+        sync: false
